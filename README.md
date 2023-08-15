@@ -59,6 +59,17 @@ end
 MyPipeline.new.process(data)
 ```
 
+### Config
+
+You can configure a success callback to be called after each step is processed:
+
+```ruby
+RubyPipeline.configure do |config|
+  config.success_callback = ->(step) { my_monitoring_service.notify(step) }
+  config.failure_callback = ->(step) { puts "Failure in step #{step}" }
+end
+```
+
 ## Contributing
 
 1. Fork it
