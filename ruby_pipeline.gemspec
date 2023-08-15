@@ -12,6 +12,10 @@ Gem::Specification.new do |s|
   s.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
-  s.homepage    = 'https://rubygems.org/gems/hola'
+  s.homepage    = 'https://rubygems.org/out-fund/ruby_pipeline'
   s.license     = 'MIT'
+
+  s.metadata['rubygems_mfa_required'] = 'true'
+  s.required_ruby_version = '>= 3.1.4'
+  s.require_paths = ['lib']
 end
