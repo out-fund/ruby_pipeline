@@ -1,6 +1,5 @@
 require:
   - rubocop-rspec
-  - rubocop-performance
 
 AllCops:
   NewCops: enable
@@ -11,7 +10,7 @@ Style/Documentation:
 Metrics/BlockLength:
   Exclude:
     - "Guardfile"
-    - "brokkr.gemspec"
+    - "ruby_pipeline.gemspec"
     - "spec/**/*.rb"
 
 Metrics/ModuleLength:
