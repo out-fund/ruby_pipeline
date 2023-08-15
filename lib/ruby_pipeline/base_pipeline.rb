@@ -10,8 +10,9 @@ module RubyPipeline
       steps.inject(input) do |memo, step|
         step_result = step.process(memo)
 
-        break false if step_result.nil?
+        break failure(step) if step_result.nil?
 
+        success(step)
         step_result
       end
     end
@@ -21,5 +22,12 @@ module RubyPipeline
     attr_reader :steps
 
     def default_steps = []
+
+    def success(step) = RubyPipeline.configuration.success_callback.call(step)
+
+    def failure(step)
+      RubyPipeline.configuration.failure_callback.call(step)
+      false
+    end
   end
 end
