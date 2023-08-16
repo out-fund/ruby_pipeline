@@ -67,6 +67,11 @@ You can configure a success callback to be called after each step is processed:
 RubyPipeline.configure do |config|
   config.success_callback = ->(step) { my_monitoring_service.notify(step) }
   config.failure_callback = ->(step) { puts "Failure in step #{step}" }
+  config.time_callback = lambda do |step, &block|
+    my_timing_service.time(step) do
+      block.call # Important to call the block, otherwise the pipeline will not continue
+    end
+  end
 end
 ```
 
