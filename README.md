@@ -88,10 +88,12 @@ We're using RSpec for testing. Run the test suite with rake spec. Tests for pull
 
 This gem uses Github Packages Registry to store gems, and all builds get pushed to it.
 
-    Update lib/brokkr/version.rb with the new version
-    Create and push a tag:
+1. Update `lib/ruby_pipeline/version.rb` with the new version
+2. Create and push a tag:
 
-git tag 'v0.1.0' # replace with your version
-git push origin 'v0.1.0'
+  ```bash
+    git tag 'v0.1.0' # replace with your version
+    git push origin 'v0.1.0'
+  ```
 
 This will automatically trigger the release workflow of GHA, after which you will be able to install a fresh version of a gem into your system.
