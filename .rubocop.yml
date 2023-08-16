@@ -1,0 +1,30 @@
+require:
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "Guardfile"
+    - "ruby_pipeline.gemspec"
+    - "spec/**/*.rb"
+
+Metrics/ModuleLength:
+  Exclude:
+    - "spec/**/*.rb"
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 8
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 20
+
+RSpec/Style/OpenStructUse:
+  Enabled: false
