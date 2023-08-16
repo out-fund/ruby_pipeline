@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require './spec/pipelines/test_pipeline'
 
 module RubyPipeline
   RSpec.describe BasePipeline do
@@ -73,6 +74,45 @@ module RubyPipeline
           process_pipeline
 
           expect(double_class).to have_received(:process).once
+        end
+      end
+
+      context 'when success_callback is set' do
+        let(:double_class) { TestSuccessStep }
+
+        it 'calls the success_callback' do
+          RubyPipeline.configure do |config|
+            config.success_callback = ->(step) { expect(step).to eq TestSuccessStep }
+          end
+
+          expect(process_pipeline).to eq(4)
+        end
+      end
+
+      context 'when failure_callback is set' do
+        let(:double_class) { TestFailureStep }
+
+        it 'calls the failure_callback' do
+          RubyPipeline.configure do |config|
+            config.failure_callback = ->(step) { expect(step).to eq TestFailureStep }
+          end
+
+          expect(process_pipeline).to be_falsey
+        end
+      end
+
+      context 'when time_callback is set' do
+        let(:double_class) { TestSuccessStep }
+
+        it 'calls the time_callback' do
+          RubyPipeline.configure do |config|
+            config.time_callback = lambda do |step, &block|
+              expect(step).to eq TestSuccessStep
+              block.call
+            end
+          end
+
+          expect(process_pipeline).to eq(4)
         end
       end
     end

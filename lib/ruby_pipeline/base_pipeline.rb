@@ -8,7 +8,7 @@ module RubyPipeline
 
     def process(input = nil)
       steps.inject(input) do |memo, step|
-        step_result = step.process(memo)
+        step_result = time(step) { step.process(memo) }
 
         break failure(step) if step_result.nil?
 
@@ -23,6 +23,7 @@ module RubyPipeline
 
     def default_steps = []
 
+    def time(step, &) = RubyPipeline.configuration.time_callback.call(step, &)
     def success(step) = RubyPipeline.configuration.success_callback.call(step)
 
     def failure(step)
