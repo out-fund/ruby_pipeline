@@ -1,0 +1,31 @@
+name: "Publish gem"
+on:
+  push:
+    tags:
+      - 'v**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install --path vendor/bundle --jobs 4 --retry 3
+
+      - name: Publish to RubyGems Packages
+        env:
+          GEM_HOST_API_KEY: ${{secrets.GEM_HOST_API_KEY}}
+        run: |
+          gem build ruby_pipeline.gemspec
+          gem push ruby_pipeline-*.gem

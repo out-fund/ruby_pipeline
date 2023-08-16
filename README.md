@@ -59,6 +59,17 @@ end
 MyPipeline.new.process(data)
 ```
 
+### Config
+
+You can configure a success callback to be called after each step is processed:
+
+```ruby
+RubyPipeline.configure do |config|
+  config.success_callback = ->(step) { my_monitoring_service.notify(step) }
+  config.failure_callback = ->(step) { puts "Failure in step #{step}" }
+end
+```
+
 ## Contributing
 
 1. Fork it
@@ -72,3 +83,17 @@ We're using RSpec for testing. Run the test suite with rake spec. Tests for pull
 ## License
 
 `ruby-pipeine`` is free software released under the MIT License. See LICENSE for details.
+
+## Publishing a gem version
+
+This gem uses Github Packages Registry to store gems, and all builds get pushed to it.
+
+1. Update `lib/ruby_pipeline/version.rb` with the new version
+2. Create and push a tag:
+
+  ```bash
+    git tag 'v0.1.0' # replace with your version
+    git push origin 'v0.1.0'
+  ```
+
+This will automatically trigger the release workflow of GHA, after which you will be able to install a fresh version of a gem into your system.
